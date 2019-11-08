@@ -10,16 +10,21 @@ import androidx.lifecycle.ViewModelProviders
 import com.future.github.BR
 import com.future.github.R
 import com.future.github.users.viewmodel.GithubUsersViewModel
+import kotlinx.android.synthetic.main.activity_git_hub_users.*
 
 
 class GitHubUsersActivity : AppCompatActivity() {
 
     lateinit var vm: GithubUsersViewModel
+    lateinit var adapter: GithubUsersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
         initBinding()
+
+        adapter = GithubUsersAdapter(mutableListOf())
+        recycler_view.adapter = adapter
     }
 
     private fun initViewModel() {
@@ -28,6 +33,13 @@ class GitHubUsersActivity : AppCompatActivity() {
             .get(GithubUsersViewModel::class.java)
 
         vm.alertSource.observe(this, Observer { showAlertDialog(it) })
+        vm.githubUsersSource.observe(this, Observer {
+            adapter.apply {
+                githubUsers.clear()
+                githubUsers.addAll(0, it)
+                notifyDataSetChanged()
+            }
+        })
     }
 
     private fun initBinding() {
