@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class GithubRepository {
 
+    // TODO dagger2 inject
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://api.github.com")
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())

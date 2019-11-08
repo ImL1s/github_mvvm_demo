@@ -22,5 +22,9 @@ data class GithubUser(
     @SerializedName("type") val type: String,
     @SerializedName("site_admin") val siteAdmin: Boolean
 ) {
-    constructor() : this("", 1, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", false)
+    constructor() : this(
+        "", 1, "", "", "", "", "",
+        "", "", "", "", "",
+        "", "", "", "", "", false
+    )
 }

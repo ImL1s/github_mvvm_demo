@@ -5,26 +5,34 @@ import androidx.lifecycle.ViewModel
 import com.future.github.users.model.GithubUser
 import com.future.github.users.repository.GithubRepository
 import hu.akarnokd.rxjava3.android.AndroidInteropSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.lang.Exception
 
 
 class GithubUsersViewModel : ViewModel() {
 
     private val repository = GithubRepository()
-    val githubUsers = MutableLiveData<List<GithubUser>>().apply { value = listOf() }
+    val githubUsersSource = MutableLiveData<List<GithubUser>>().apply { value = listOf() }
+    val alertSource = MutableLiveData<String>()
 
     init {
         repository.users()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidInteropSchedulers.mainThread())
-//            .doOnError { print(it.message) }
-            .subscribe { githubUsers.postValue(it) }
-//        githubUsers.value = listOf(GithubUser(), GithubUser())
-//        githubUsers.value = listOf(GithubUser(), GithubUser())
-//        githubUsers.value = listOf(GithubUser(), GithubUser())
+            .subscribe { githubUsersSource.postValue(it) }
 
-//        githubUsers.postValue(listOf(GithubUser()))
-//        githubUsers.postValue(listOf(GithubUser()))
-//        githubUsers.postValue(listOf(GithubUser()))
+        Observable.error<Exception>(Exception("111"))
+            .doOnError { alertSource.postValue(it.message) }
+            .subscribe({}, { alertSource.postValue(it.message) })
+
+
+//        githubUsersSource.value = listOf(GithubUser(), GithubUser())
+//        githubUsersSource.value = listOf(GithubUser(), GithubUser())
+//        githubUsersSource.value = listOf(GithubUser(), GithubUser())
+
+//        githubUsersSource.postValue(listOf(GithubUser()))
+//        githubUsersSource.postValue(listOf(GithubUser()))
+//        githubUsersSource.postValue(listOf(GithubUser()))
     }
 }
