@@ -1,3 +1,5 @@
+// progressive kotlin DSL :D
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
