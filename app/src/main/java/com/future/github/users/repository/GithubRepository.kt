@@ -10,14 +10,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 class GithubRepository {
 
     // TODO dagger2 inject
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.github.com")
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(OkHttpClient.Builder().build())
-        .build()
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://api.github.com")
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OkHttpClient.Builder().build())
+            .build()
+    }
 
-    fun users(): Observable<List<GithubUser>> {
-        return retrofit.create(GithubApi::class.java).users()
+    fun users(since: Int = 0): Observable<List<GithubUser>> {
+        return retrofit.create(GithubApi::class.java).users(since)
     }
 }

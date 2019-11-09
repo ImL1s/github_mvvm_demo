@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Happy Application :D</string>
+    <string name="btn_positive_text_default">OK</string>
+    <string name="alert_dialog_title_default">Alert</string>
+    <string name="staff">STAFF</string>
+    <string name="error_adapter_init_or_not_linear_layout">Adapter is not initialized or recycle view is not linear layout!</string>
+    <string name="error_msg_start">Error message:</string>
+    <string name="load_more_users">load more users</string>
+    <string name="load_limit">Can\'t load more, load limit is 100</string>
 </resources>

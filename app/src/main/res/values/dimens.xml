@@ -2,4 +2,8 @@
 <resources>
     <dimen name="avatar_width">36dp</dimen>
     <dimen name="avatar_height">36dp</dimen>
+    <dimen name="text_size_default">12sp</dimen>
+    <dimen name="btn_badge_width">48dp</dimen>
+    <dimen name="btn_badge_height">20dp</dimen>
+    <dimen name="padding_button">2dp</dimen>
 </resources>

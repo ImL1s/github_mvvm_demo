@@ -1,35 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="vm"
             type="com.future.github.users.viewmodel.GithubUserItemViewModel" />
     </data>
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleImageView"
                 image="@{vm.imageUrlSource}"
                 android:layout_width="@dimen/avatar_width"
-                android:layout_height="@dimen/avatar_height" />
+                android:layout_height="@dimen/avatar_height"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.01" />
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="@{vm.login}" />
+                android:text="@{vm.login, default=Sam}"
+                app:layout_constraintBottom_toTopOf="@+id/btn_badge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/btn_badge"
+                android:layout_width="@dimen/btn_badge_width"
+                android:layout_height="@dimen/btn_badge_height"
+                android:layout_marginTop="@dimen/padding_button"
+                android:background="@drawable/button_background"
+                android:text="@string/staff"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_default"
+                android:visibility="@{vm.staff ? View.VISIBLE:View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/textView"
+                app:layout_constraintStart_toStartOf="@id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            </Button>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 </layout>

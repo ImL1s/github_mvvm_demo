@@ -14,8 +14,6 @@ object BindingAdapter {
     @JvmStatic
     fun setRecyclerView(view: RecyclerView, users: List<GithubUser>?) {
 // TODO BindingAdapter setRecyclerView
-
-        Log.e("GG", "user: ${users?.size}")
     }
 
 

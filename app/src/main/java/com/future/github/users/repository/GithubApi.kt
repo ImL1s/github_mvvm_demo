@@ -8,5 +8,5 @@ import retrofit2.http.Query
 interface GithubApi {
 
     @GET("/users")
-    fun users(@Query("since") since: Int = 135): Observable<List<GithubUser>>
+    fun users(@Query("since") since: Int = 0): Observable<List<GithubUser>>
 }

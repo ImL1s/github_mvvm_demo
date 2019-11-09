@@ -8,4 +8,6 @@ class GithubUserItemViewModel(model: GithubUser) {
     // use mutable live data because url need download.(data need change)
     val imageUrlSource = MutableLiveData<String>().apply { value = model.avatarUrl }
     val login = model.login
+    val isStaff = model.siteAdmin
+    val onClickSource = MutableLiveData<Unit>()
 }

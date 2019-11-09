@@ -2,6 +2,7 @@ package com.future.github.users.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.future.github.MAX_USERS_LOAD
 import com.future.github.users.model.GithubUser
 import com.future.github.users.repository.GithubRepository
 import hu.akarnokd.rxjava3.android.AndroidInteropSchedulers
@@ -17,22 +18,32 @@ class GithubUsersViewModel : ViewModel() {
     val alertSource = MutableLiveData<String>()
 
     init {
-        repository.users()
+        githubUsersSource()
+            .map { it.subList(0, 20) }
+            .subscribe(
+                { githubUsersSource.postValue(it) },
+                { alertSource.postValue(it.message) }
+            )
+        // rx kotlin is not available in rx java 3.0 :( so sad.
+    }
+
+    private fun githubUsersSource(since: Int = 0): Observable<List<GithubUser>> {
+        return repository.users(since)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidInteropSchedulers.mainThread())
-            .subscribe { githubUsersSource.postValue(it) }
+    }
 
-        Observable.error<Exception>(Exception("111"))
-            .doOnError { alertSource.postValue(it.message) }
-            .subscribe({}, { alertSource.postValue(it.message) })
-
-
-//        githubUsersSource.value = listOf(GithubUser(), GithubUser())
-//        githubUsersSource.value = listOf(GithubUser(), GithubUser())
-//        githubUsersSource.value = listOf(GithubUser(), GithubUser())
-
-//        githubUsersSource.postValue(listOf(GithubUser()))
-//        githubUsersSource.postValue(listOf(GithubUser()))
-//        githubUsersSource.postValue(listOf(GithubUser()))
+    fun onLoadMore(since: Int) {
+        githubUsersSource()
+            .map {
+                if (it.size > MAX_USERS_LOAD) {
+                    return@map it.subList(0, 100)
+                }
+                it
+            }
+            .subscribe(
+                { githubUsersSource.postValue(it) },
+                { alertSource.postValue(it.message) }
+            )
     }
 }
