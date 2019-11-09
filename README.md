@@ -30,3 +30,6 @@
 
 ### Annotation Processing
 - kapt(dagger2 need it)
+
+### Gradle
+- kotlin DSL(I like it very very much)
